@@ -49,7 +49,9 @@ function playRound(playerSelection, computerSelection) {
   } else if (playerSelection == "scissors" && computerSelection == "paper") {
     playerScore++;
     return "You Win! Scissors beats Paper";
-  } else if (playerSelection == "rock" && computerSelection == "rock" || playerSelection == "paper" && computerSelection == "paper" || playerSelection == "scissors" && computerSelection == "scissors") {
+  } else if (playerSelection == "rock" && computerSelection == "rock" || 
+    playerSelection == "paper" && computerSelection == "paper" || 
+    playerSelection == "scissors" && computerSelection == "scissors") {
     return "Tie!";
   } else {
     // add a invalid answer point to reset the round and make sure there will be 5 pop-ups asking for an answer
