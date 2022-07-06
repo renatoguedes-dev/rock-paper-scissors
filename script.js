@@ -6,13 +6,7 @@ let playerScore = 0;
 // set computer's score to start at zero
 let computerScore = 0;
 
-// variable to help avoid invalid answers
-let invalidAnswer = 0;
-
-
-
-// create a function to randomly return either ‘Rock’, ‘Paper’ or ‘Scissors’
-
+// function to randomly return either ‘Rock’, ‘Paper’ or ‘Scissors’
 function computerPlay() {
   
   result = Math.floor(Math.random() * 3);
@@ -28,7 +22,8 @@ function computerPlay() {
 }
 
 
-// single round function. It adds a score to the winner of round, do nothing if it's a tie and  
+// Single round function. It adds a score to the winner of round, do nothing 
+// if it's a tie  
 function playRound(playerSelection, computerSelection) {
 
   if (playerSelection == "rock" && computerSelection == "paper") {
@@ -53,41 +48,76 @@ function playRound(playerSelection, computerSelection) {
     playerSelection == "paper" && computerSelection == "paper" || 
     playerSelection == "scissors" && computerSelection == "scissors") {
     return "Tie!";
-  } else {
-    // add a invalid answer point to reset the round and make sure there will be 5 pop-ups asking for an answer
-    invalidAnswer++;
-    while (true) {
-      alert("You didn't type a valid answer. Please type 'Rock', 'Paper' or 'Scissors'.");
-      return "You didn't type a valid answer. Please type 'Rock', 'Paper' or 'Scissors'.";
-    }
-
-  }
+   }
 }
 
-function game() {
 
-  for (let round = 1; round <= 5; round++) {
 
-    // .toLowerCase() to make sure both player and computer selections will be case insensitive
-    playerSelection = prompt("Please choose between 'Rock', 'Paper' or 'Scissors'.").toLowerCase();
-    computerSelection = computerPlay().toLowerCase();
-    roundPlayed = playRound(playerSelection, computerSelection);
-    console.log(roundPlayed);
-
-    // loop to return the invalidAnswer variable back to 0 and reduce the round count by 1 to make sure there will be 5 valid rounds
-    while (invalidAnswer == 1) {
-      round--;
-      invalidAnswer--;
-    }
-  }
-
-  if (playerScore > computerScore) {
-    console.log("You won the game! You beat the computer!");
-  } else if (playerScore < computerScore) {
-    console.log("Oh no! The computer beat you this time. You should try again!");
-  } else if (playerScore == computerScore) {
-    console.log("Unbelievable! It's a draw!")
-  }
-}
    
-game();
+// make the buttons rock paper scissors respond when clicked
+const playButtons = Array.from(document.getElementsByClassName('play-buttons'));
+playButtons.forEach(button => button.addEventListener('click', game));
+
+let playerSelection;
+
+// main function of the script
+function game(e) {
+  playerSelection = e.target.innerText.toLowerCase();
+  computerSelection = computerPlay().toLowerCase();
+  roundPlayed = playRound(playerSelection, computerSelection);
+  showRoundResult();
+  showFinalResult();
+  updateScores();
+}
+
+// variables to make changes into DOM
+const bodySection = document.querySelector('#body-section');
+const buttonsDiv = document.querySelector('#choice-btns');
+const showResultDiv = document.querySelector('#results-show');
+
+
+// display the round result on the screen
+function showRoundResult() {
+  const roundDiv = document.createElement('div');
+  roundDiv.classList.add('round-played');
+  roundDiv.textContent = `${roundPlayed}`;
+  showResultDiv.appendChild(roundDiv)
+}
+
+// parameter to decide which message will be the end result
+function finalResult() {
+  if (playerScore == 5) {
+    return "You won the game! You beat the computer!";
+  } else if (computerScore == 5) {
+    return "Oh no! The computer beat you this time. You should try again!";
+  } else {
+    return '';
+  }
+}
+
+// function to show the end result and update the round result
+function showFinalResult() {
+  finalText = finalResult();
+  const resultDiv = document.createElement('div');
+  
+  if (showResultDiv.childNodes.length > 1 && 
+    (playerScore < 5 && computerScore < 5)) {
+    showResultDiv.removeChild(showResultDiv.firstChild);
+
+  } else
+  if (playerScore == 5 || computerScore == 5) {
+    showResultDiv.removeChild(showResultDiv.firstChild);
+    showResultDiv.removeChild(showResultDiv.firstChild);
+    resultDiv.classList.add('final-result');
+    resultDiv.textContent = `${finalText}`;
+    showResultDiv.appendChild(resultDiv);
+    playButtons.forEach(btn => btn.disabled = true);
+  }
+}
+
+// updates both player and computer scores accordingly
+function updateScores() {
+  document.getElementsByClassName('player-total')[0].innerText = playerScore;
+  document.getElementsByClassName('machine-total')[0].innerText = computerScore;
+}
+
