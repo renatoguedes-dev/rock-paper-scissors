@@ -51,9 +51,6 @@ function playRound(playerSelection, computerSelection) {
    }
 }
 
-
-
-   
 // make the buttons rock paper scissors respond when clicked
 const playButtons = Array.from(document.getElementsByClassName('play-buttons'));
 playButtons.forEach(button => button.addEventListener('click', game));

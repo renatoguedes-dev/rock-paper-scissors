@@ -6,6 +6,20 @@ body {
   background-color: rgba(206, 206, 3, 0.493);
 }
 
+.copyright {
+  background-color: #1F2937;
+  color: #E5E7EB;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  font-size: 20px;
+  font-weight: 400;
+  width: 100%;
+  margin-top: auto;
+}
+
 .play-buttons {
   font-size: 1.5em;
   text-align: center;
@@ -15,7 +29,7 @@ body {
   color: white;
   background-color: #01559b;
   border: 3px solid white;
-  border-radius: 0;
+  border-radius: 20px;
   font-weight: bold;
   margin: 30px 30px 30px 30px;
   padding: 20px;
