@@ -1,6 +1,8 @@
-const rockButton = document.getElementById("rock-btn");
-const paperButton = document.getElementById("paper-btn");
-const scissorsButton = document.getElementById("scissors-btn");
+const rockButton = document.querySelector("#rock-btn");
+const paperButton = document.querySelector("#paper-btn");
+const scissorsButton = document.querySelector("#scissors-btn");
+const allButtons = document.querySelectorAll("button");
+const buttonsArray = Array.from(allButtons);
 const availableOptions = ["Rock", "Paper", "Scissors"];
 const playerScoreDisplay = document.querySelector(".player-score.player-total");
 const computerScoreDisplay = document.querySelector(".machine-score.machine-total");
@@ -25,11 +27,9 @@ function getComputerChoice() {
 function selectAndPlay(e) {
   const clickedButtonText = e.target.innerText;
   let playerSelection = clickedButtonText;
-
   let computerSelection = getComputerChoice();
-  // console.log(playRound(playerSelection, computerSelection));
+
   playRound(playerSelection, computerSelection);
-  
   changeScore();
   showResult();
   declareWinner();
@@ -101,11 +101,21 @@ function showResult() {
 function declareWinner() {
   if (computerScore === 5) {
     para.innerText = "The machine won with 5 points :("
+    disableAllButtons();
+
   } else if (playerScore === 5) {
     para.innerText = "You won! You got 5 points! :D"
+    disableAllButtons();
+
   } else {
     return;
   }
+}
+
+function disableAllButtons() {
+  buttonsArray.forEach(button => {
+    button.disabled = true;
+  })
 }
 
 // Attach click event listeners to buttons
